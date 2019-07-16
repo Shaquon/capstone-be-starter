@@ -65,7 +65,7 @@ components:
       type: string
       format: date-time
     isAdmin: 
-      type: Boolean
+      type: boolean
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme
       type: http
