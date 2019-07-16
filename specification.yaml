@@ -179,9 +179,12 @@ paths:
                   $ref: "#/components/schemas/username"
                 password:
                   $ref: "#/components/schemas/password"
+                role:
+                  $ref: "#/components/schemas/role"
               required:
                 - username
                 - password
+                - role
       responses:
         200:
           description: OK
