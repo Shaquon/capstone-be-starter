@@ -14,11 +14,11 @@ const logout = [
 
 // login user
 const login = async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password, role } = req.body;
   const user = await User.findOne({ username });
   if (user && (await bcrypt.compare(password, user.get("password")))) {
     const token = jwt.sign({ username }, process.env.JWT_SECRET);
-    res.send({ token, username, statusCode: res.statusCode });
+    res.send({ token, username, role, statusCode: res.statusCode });
   } else {
     next({
       statusCode: 400,
