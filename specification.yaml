@@ -145,7 +145,7 @@ paths:
                       username:
                         $ref: "#/components/schemas/username"
                       role:
-                        $ref: "#/componets/shemas/role"
+                        $ref: "#/components/shemas/role"
                       token:
                         type: string
                     required:
