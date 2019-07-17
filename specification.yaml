@@ -15,15 +15,15 @@ components:
       properties:
         username:
           $ref: "#/components/schemas/username"
-        isAdmin: 
-          $ref: "#/components/schemas/isAdmin"
+        role: 
+          $ref: "#/components/schemas/role"
         createdAt:
           $ref: "#/components/schemas/timestamp"
         updatedAt:
           $ref: "#/components/schemas/timestamp"
       required:
         - username
-        - isAdmin
+        - role
         - createdAt
         - updatedAt
     OperationalError:
@@ -64,8 +64,11 @@ components:
     timestamp:
       type: string
       format: date-time
-    isAdmin: 
-      type: boolean
+    role: 
+      type: string
+      enum:
+        - user
+        - store
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme
       type: http
@@ -127,12 +130,12 @@ paths:
                   $ref: "#/components/schemas/username"
                 password:
                   $ref: "#/components/schemas/password"
-                isAdmin: 
-                  $ref: "#/components/schemas/isAdmin"
+                role: 
+                  $ref: "#/components/schemas/role"
               required:
                 - username
                 - password
-                - isAdmin
+                - role
       responses:
         200:
           description: OK
@@ -144,14 +147,14 @@ paths:
                     properties:
                       username:
                         $ref: "#/components/schemas/username"
-                      isAdmin:
-                        $ref: "#/components/schemas/isAdmin"
+                      role:
+                        $ref: "#/components/schemas/role"
                       token:
                         type: string
                     required:
                       - username
                       - token
-                      - isAdmin
+                      - role
                   - $ref: "#/components/schemas/SuccessStatusCode"
         400:
           $ref: "#/components/responses/400"
@@ -192,12 +195,12 @@ paths:
                   $ref: "#/components/schemas/username"
                 password:
                   $ref: "#/components/schemas/password"
-                isAdmin:
-                  $ref: "#/components/schemas/isAdmin"
+                role:
+                  $ref: "#/components/schemas/role"
               required:
                 - username
                 - password
-                - isAdmin
+                - role
       responses:
         200:
           description: OK
@@ -209,11 +212,79 @@ paths:
                     properties:
                       username:
                         $ref: "#/components/schemas/username"
-                      isAdmin:
-                        $ref: "#/components/schemas/isAdmin"
+                      role:
+                        $ref: "#/components/schemas/role"
                     required:
                       - username
-                      - isAdmin
+                      - role
                   - $ref: "#/components/schemas/SuccessStatusCode"
         400:
           $ref: "#/components/responses/400"
+  /bids: 
+    get:
+      summary: Get a list of bids
+      operationId: getBids
+      x-controller: bids
+      tags:
+        - Bids
+      security:
+        - bearerAuth: []
+    post: 
+      summary: Create New Bid
+      operationId: createBid # function name
+      x-controller: bids # file name
+      tags: 
+        - Bids
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              additionalProperties: false
+              type: object
+              properties:
+                upc:
+                  $ref: "#/components/schemas/upc"
+                listedPrice:
+                  $ref: "#/components/schemas/listedPrice"
+                bidPrice:
+                  $ref: "#/components/schemas/bidPrice"
+                productInfo: 
+                  $ref: "#/components/schemas/productInfo"
+                voucher: 
+                  $ref: "#/components/schemas/voucher"
+                storeUsername: 
+                  $ref: "#/components/schemas/storeUsername"
+                username: 
+                  $ref: "#/components/schemas/username"
+                # bidStatus: 
+                #   $ref: "#/components/schemas/bidStatus"
+                # createdAt:
+                #   $ref: "#/components/schemas/createdAt"
+                # updatedAt:
+                #   $ref: "#/components/schemas/updatedAt"
+  /bids/{bid}:
+    patch:
+      summary: Accept/Decline a bid
+      operationId: acceptBid
+      x-controller: bids
+      tags:
+        - Bids
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              additionalProperties: false
+              type: object
+              properties:
+                accepted:
+                  type: boolean
+              required:
+                - accepted
+
+
+
+

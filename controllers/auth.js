@@ -17,7 +17,7 @@ const login = async (req, res, next) => {
   const { username, password, isAdmin } = req.body;
   const user = await User.findOne({ username });
   if (user && (await bcrypt.compare(password, user.get("password")))) {
-    const token = jwt.sign({ username }, process.env.JWT_SECRET);
+    const token = jwt.sign({ username, role: user.role }, process.env.JWT_SECRET);
     res.send({ token, username, isAdmin, statusCode: res.statusCode });
   } else {
     next({

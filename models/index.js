@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("./User");
+const Bid = require("./Bid");
 
 const errorHandlerMiddleware = (err, req, res, next) => {
   if (err.name === "MongoError" && err.code === 11000) {
@@ -15,6 +16,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 
 module.exports = {
   User,
+  Bid,
   errorHandlerMiddleware,
   startup: () =>
     new Promise((resolve, reject) => {

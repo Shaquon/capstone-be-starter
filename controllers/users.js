@@ -29,12 +29,12 @@ const getUser = async (req, res, next) => {
 
 // create a new user
 const createUser = async (req, res, next) => {
-  const { username, password, isAdmin } = req.body;
+  const { username, password, role } = req.body;
   try {
     const user = await User.create({
       username,
       password,
-      isAdmin
+      role
     });
     res.send({ user: getRawUser(user), statusCode: res.statusCode });
   } catch (err) {
