@@ -130,12 +130,9 @@ paths:
                   $ref: "#/components/schemas/username"
                 password:
                   $ref: "#/components/schemas/password"
-                role: 
-                  $ref: "#/components/schemas/role"
               required:
                 - username
                 - password
-                - role
       responses:
         200:
           description: OK
@@ -229,6 +226,9 @@ paths:
         - Bids
       security:
         - bearerAuth: []
+      responses:
+        200:
+          description: OK
     post: 
       summary: Create New Bid
       operationId: createBid # function name
@@ -246,25 +246,28 @@ paths:
               type: object
               properties:
                 upc:
-                  $ref: "#/components/schemas/upc"
+                  type: number 
                 listedPrice:
-                  $ref: "#/components/schemas/listedPrice"
+                  type: number
                 bidPrice:
-                  $ref: "#/components/schemas/bidPrice"
+                  type: number
                 productInfo: 
-                  $ref: "#/components/schemas/productInfo"
+                  type: object
                 voucher: 
-                  $ref: "#/components/schemas/voucher"
+                  type: number
                 storeUsername: 
-                  $ref: "#/components/schemas/storeUsername"
+                  type: string
                 username: 
-                  $ref: "#/components/schemas/username"
+                  type: string
                 # bidStatus: 
                 #   $ref: "#/components/schemas/bidStatus"
                 # createdAt:
                 #   $ref: "#/components/schemas/createdAt"
                 # updatedAt:
                 #   $ref: "#/components/schemas/updatedAt"
+      responses:
+        200:
+          description: OK
   /bids/{bid}:
     patch:
       summary: Accept/Decline a bid
@@ -272,6 +275,13 @@ paths:
       x-controller: bids
       tags:
         - Bids
+      parameters:
+        - in: path
+          name: bid
+          required: true
+          description: bid id
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -284,6 +294,9 @@ paths:
                   type: boolean
               required:
                 - accepted
+      responses:
+        200:
+          description: OK
 
 
 
