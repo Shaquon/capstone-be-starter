@@ -15,7 +15,7 @@ components:
       properties:
         username:
           $ref: "#/components/schemas/username"
-        role: 
+        role:
           $ref: "#/components/schemas/role"
         createdAt:
           $ref: "#/components/schemas/timestamp"
@@ -64,7 +64,7 @@ components:
     timestamp:
       type: string
       format: date-time
-    role: 
+    role:
       type: string
       enum:
         - user
@@ -207,17 +207,14 @@ paths:
                 allOf:
                   - type: object
                     properties:
-                      username:
-                        $ref: "#/components/schemas/username"
-                      role:
-                        $ref: "#/components/schemas/role"
+                      user:
+                        $ref: "#/components/schemas/User"
                     required:
-                      - username
-                      - role
+                      - user
                   - $ref: "#/components/schemas/SuccessStatusCode"
         400:
           $ref: "#/components/responses/400"
-  /bids: 
+  /bids:
     get:
       summary: Get a list of bids
       operationId: getBids
@@ -229,11 +226,11 @@ paths:
       responses:
         200:
           description: OK
-    post: 
+    post:
       summary: Create New Bid
       operationId: createBid # function name
       x-controller: bids # file name
-      tags: 
+      tags:
         - Bids
       security:
         - bearerAuth: []
@@ -246,20 +243,20 @@ paths:
               type: object
               properties:
                 upc:
-                  type: number 
+                  type: number
                 listedPrice:
                   type: number
                 bidPrice:
                   type: number
-                productInfo: 
+                productInfo:
                   type: object
-                voucher: 
+                voucher:
                   type: number
-                storeUsername: 
+                storeUsername:
                   type: string
-                username: 
+                username:
                   type: string
-                # bidStatus: 
+                # bidStatus:
                 #   $ref: "#/components/schemas/bidStatus"
                 # createdAt:
                 #   $ref: "#/components/schemas/createdAt"
@@ -275,6 +272,8 @@ paths:
       x-controller: bids
       tags:
         - Bids
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: bid
@@ -297,7 +296,3 @@ paths:
       responses:
         200:
           description: OK
-
-
-
-

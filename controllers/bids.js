@@ -60,13 +60,14 @@ const acceptBid = [
     // req.body.accepted - boolean
     // req.params.bid
 
-    // todo: check what updateOne result value is
-    const bid = await Bid.updateOne(
-      { where: { _id: req.params.bid } },
-      { bidStatus: req.body.accepted ? "accepted" : "declined" }
-    );
+    const bid = await Bid.findById(req.params.bid);
+    bid.bidStatus = req.body.accepted ? "accepted" : "declined";
+    await bid.save();
 
-    res.send({ bid, statusCode: res.statusCode });
+    res.send({
+      bid,
+      statusCode: res.statusCode
+    });
   }
 ];
 

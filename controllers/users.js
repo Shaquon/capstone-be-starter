@@ -3,6 +3,7 @@ const { validateJwtMiddleware } = require("../auth");
 
 function getRawUser(user) {
   const rawUser = user.toJSON();
+  delete rawUser._id;
   delete rawUser.password;
   delete rawUser.picture;
   delete rawUser.pictureContentType;
@@ -45,4 +46,4 @@ const createUser = async (req, res, next) => {
 module.exports = {
   createUser,
   getUser
-}
+};
